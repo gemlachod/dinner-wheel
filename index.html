@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kok Family Dinner</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root {
+  --bg: #120A0A;
+  --bg2: #1C1010;
+  --surface: #221414;
+  --card: #2A1818;
+  --card2: #321E1E;
+  --red: #C8303A;
+  --red-bright: #E53545;
+  --gold: #D4942A;
+  --gold-light: #F0C060;
+  --gold-dim: rgba(212,148,42,0.12);
+  --text: #F5E8D0;
+  --text2: #C4A882;
+  --text3: #8A7060;
+  --border: rgba(212,148,42,0.18);
+  --border2: rgba(212,148,42,0.32);
+}
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  max-width: 430px;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 35% at 50% 0%, rgba(200,48,58,0.14) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 25% at 85% 95%, rgba(212,148,42,0.07) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 4L56 30L30 56L4 30Z' stroke='%23D4942A' stroke-width='0.4' fill='none' opacity='0.07'/%3E%3Ccircle cx='30' cy='30' r='3' stroke='%23D4942A' stroke-width='0.3' fill='none' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+header, section, div.dinner-list, div.add-section, div.history-section, footer, div.section-divider {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HEADER ── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(18,10,10,0.96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.header-inner {
+  padding: 16px 24px 13px;
+  text-align: center;
+  position: relative;
+}
+
+.header-inner::before, .header-inner::after {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-60%);
+  color: var(--gold);
+  font-size: 9px;
+  opacity: 0.5;
+}
+.header-inner::before { left: 18px; }
+.header-inner::after { right: 18px; }
+
+.hdr-cn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 10px;
+  letter-spacing: 7px;
+  color: var(--gold);
+  opacity: 0.7;
+  margin-bottom: 5px;
+}
+
+header h1 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 23px;
+  font-weight: 900;
+  color: var(--text);
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+}
+
+header h1 .red { color: var(--red-bright); }
+
+.hdr-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.hdr-rule hr {
+  flex: 1; border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.35; max-width: 56px;
+}
+.hdr-rule span {
+  font-size: 9px; letter-spacing: 3px; color: var(--text3); text-transform: uppercase;
+}
+
+/* ── LANTERNS ── */
+.lanterns {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding: 22px 0 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.lantern {
+  display: flex; flex-direction: column; align-items: center;
+  animation: sway 3.2s ease-in-out infinite;
+}
+.lantern:nth-child(2) { animation-delay: -1.6s; animation-duration: 3.7s; }
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
+}
+
+.ln-string { width: 1px; height: 18px; background: var(--gold); opacity: 0.45; }
+
+.ln-body {
+  width: 24px; height: 36px;
+  background: linear-gradient(175deg, #C8303A 0%, #8A1018 100%);
+  border-radius: 50% 50% 46% 46% / 36% 36% 52% 52%;
+  border: 1px solid rgba(212,148,42,0.45);
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 14px rgba(200,48,58,0.55), inset 0 0 8px rgba(255,180,60,0.2);
+  font-family: 'Noto Serif SC', serif;
+  font-size: 11px; color: rgba(255,230,160,0.9);
+  position: relative;
+}
+
+.ln-body::after {
+  content: '';
+  position: absolute; top: 5px; left: 5px;
+  width: 5px; height: 12px;
+  background: rgba(255,220,120,0.22);
+  border-radius: 50%;
+}
+
+.ln-tassel { display: flex; gap: 2px; margin-top: 1px; }
+.ln-tassel span { width: 1px; height: 9px; background: var(--gold); opacity: 0.55; border-radius: 1px; }
+
+/* ── SPIN SECTION ── */
+.spin-section {
+  padding: 10px 24px 28px;
+  text-align: center;
+  position: relative; z-index: 1;
+}
+
+.spin-label {
+  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--text3); margin-bottom: 26px; font-weight: 300;
+}
+
+.wheel-wrapper {
+  position: relative; display: inline-block; margin-bottom: 30px;
+}
+
+.wheel-ring {
+  width: 258px; height: 258px;
+  border-radius: 50%;
+  border: 1px solid var(--border2);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+
+.wheel-ring::before {
+  content: '';
+  position: absolute; inset: 7px; border-radius: 50%;
+  border: 1px dashed rgba(212,148,42,0.15);
+}
+
+.wheel-outer {
+  width: 222px; height: 222px; border-radius: 50%;
+  position: relative;
+  transition: transform 4.3s cubic-bezier(0.15, 0.6, 0.08, 1.0);
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 3px #1C1010,
+    0 0 0 4px rgba(212,148,42,0.28),
+    0 10px 40px rgba(0,0,0,0.7),
+    0 0 50px rgba(200,48,58,0.1);
+}
+
+.wheel-outer canvas { width: 100%; height: 100%; border-radius: 50%; display: block; }
+
+.wheel-center {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px; height: 58px; border-radius: 50%;
+  background: radial-gradient(circle, #3A1A1A 0%, #160808 100%);
+  border: 2px solid rgba(212,148,42,0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 5;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.5), 0 0 16px rgba(200,48,58,0.35);
+}
+
+.wheel-center .cn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px; color: var(--gold-light); line-height: 1;
+  text-shadow: 0 0 10px rgba(212,148,42,0.9);
+}
+
+.wheel-pointer {
+  position: absolute; top: -10px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  filter: drop-shadow(0 3px 8px rgba(200,48,58,0.7));
+}
+
+/* ── SPIN BTN ── */
+.spin-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px; padding: 15px 38px;
+  background: linear-gradient(135deg, #C8303A 0%, #8A1018 100%);
+  color: var(--text);
+  border: 1px solid rgba(212,148,42,0.38);
+  border-radius: 100px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 14px; font-weight: 500; letter-spacing: 1.5px;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 24px rgba(200,48,58,0.4), inset 0 1px 0 rgba(255,255,255,0.07);
+  position: relative; overflow: hidden;
+}
+
+.spin-btn::before {
+  content: '';
+  position: absolute; top: 0; left: -100%; width: 55%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent);
+  transition: left 0.45s;
+}
+.spin-btn:not(:disabled):hover::before { left: 160%; }
+.spin-btn:active { transform: scale(0.97); }
+.spin-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.si { font-size: 10px; color: var(--gold-light); opacity: 0.8; }
+
+/* ── RESULT CARD ── */
+.result-card {
+  margin: 0 20px 28px;
+  border: 1px solid var(--border2);
+  border-radius: 22px;
+  overflow: hidden;
+  display: none;
+  animation: popIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 10px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,148,42,0.08);
+  position: relative; z-index: 1;
+}
+.result-card.show { display: block; }
+
+@keyframes popIn {
+  from { transform: scale(0.82) translateY(14px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.res-top {
+  background: linear-gradient(140deg, #9A1A22 0%, #6A0C12 50%, #5A0A10 100%);
+  padding: 20px 20px 16px;
+  text-align: center; position: relative; overflow: hidden;
+}
+
+.res-top::before {
+  content: '食';
+  position: absolute; top: -20px; right: -10px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 90px; color: rgba(255,255,255,0.03); font-weight: 900; line-height: 1;
+  pointer-events: none;
+}
+
+.res-top::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212,148,42,0.4), transparent);
+}
+
+.res-tag {
+  font-size: 9px; letter-spacing: 4px; text-transform: uppercase;
+  color: rgba(255,220,160,0.6); font-weight: 300; margin-bottom: 3px;
+}
+.res-cn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 10px; color: rgba(255,220,160,0.4); letter-spacing: 5px; margin-bottom: 12px;
+}
+
+.res-emoji {
+  font-size: 54px; display: block; margin-bottom: 0;
+  animation: dropIn 0.4s cubic-bezier(0.34,1.4,0.64,1);
+}
+@keyframes dropIn {
+  from { transform: scale(0.2) translateY(-20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.res-body {
+  background: var(--card);
+  padding: 18px 20px 20px; text-align: center;
+}
+
+.res-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 26px; font-weight: 700; color: var(--text);
+  margin-bottom: 5px; letter-spacing: 0.5px;
+}
+
+.res-cuisine {
+  font-size: 11px; color: var(--text3);
+  margin-bottom: 18px; letter-spacing: 1.5px; text-transform: uppercase;
+}
+
+.res-actions { display: flex; gap: 10px; }
+
+.res-actions button {
+  flex: 1; padding: 13px 8px; border-radius: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all 0.18s; letter-spacing: 0.5px;
+}
+
+.btn-keep {
+  background: linear-gradient(135deg, var(--gold) 0%, #A06A10 100%);
+  color: #1A0A00; border: none;
+  box-shadow: 0 4px 16px rgba(212,148,42,0.3);
+}
+.btn-respin {
+  background: transparent; color: var(--text2);
+  border: 1px solid var(--border2);
+}
+.res-actions button:active { transform: scale(0.96); }
+
+/* ── DIVIDERS ── */
+.section-divider {
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 20px; margin-bottom: 16px; position: relative; z-index: 1;
+}
+.section-divider hr {
+  flex: 1; border: none; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+}
+.div-inner { display: flex; align-items: center; gap: 7px; flex-shrink: 0; }
+.div-inner span {
+  font-size: 9px; letter-spacing: 3px; color: var(--text3); text-transform: uppercase; font-weight: 300;
+}
+.diam { color: var(--gold); font-size: 7px; opacity: 0.55; }
+
+/* ── DINNER LIST ── */
+.dinner-list {
+  padding: 0 20px 28px; position: relative; z-index: 1;
+}
+
+.dinner-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 12px;
+  transition: all 0.2s;
+  position: relative; overflow: hidden;
+  animation: fadeUp 0.3s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dinner-item::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(180deg, var(--red) 0%, var(--gold) 100%);
+  border-radius: 3px 0 0 3px;
+  opacity: 0; transition: opacity 0.2s;
+}
+.dinner-item:active { transform: scale(0.99); }
+.dinner-item:active::before { opacity: 1; }
+
+.d-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 10px; color: var(--text3); min-width: 16px; text-align: center;
+}
+.d-emoji { font-size: 26px; flex-shrink: 0; line-height: 1; }
+.d-info { flex: 1; min-width: 0; }
+.d-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px; font-weight: 700; color: var(--text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.d-meta { font-size: 11px; color: var(--text3); margin-top: 2px; letter-spacing: 0.5px; }
+
+.del-btn {
+  width: 30px; height: 30px; border-radius: 8px;
+  border: 1px solid rgba(200,48,58,0.18);
+  background: transparent; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; color: var(--text3); flex-shrink: 0;
+  transition: all 0.15s;
+}
+.del-btn:hover { border-color: var(--red); color: var(--red); background: rgba(200,48,58,0.08); }
+.del-btn:active { transform: scale(0.9); }
+
+.empty-state {
+  text-align: center; padding: 36px 20px;
+  color: var(--text3); font-size: 13px; letter-spacing: 0.5px;
+}
+.empty-state .ei { font-size: 34px; display: block; margin-bottom: 10px; opacity: 0.45; }
+
+/* ── ADD SECTION ── */
+.add-section { padding: 0 20px 32px; position: relative; z-index: 1; }
+
+.add-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 22px 20px 20px;
+  position: relative; overflow: hidden;
+}
+
+.add-card::after {
+  content: '加';
+  position: absolute; bottom: -14px; right: -4px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 88px; color: rgba(212,148,42,0.035); font-weight: 900; pointer-events: none;
+}
+
+.add-label {
+  font-size: 9px; letter-spacing: 3.5px; text-transform: uppercase;
+  color: var(--gold); opacity: 0.75; margin-bottom: 16px;
+}
+
+.emoji-row { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+
+.ep {
+  width: 38px; height: 38px; border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  font-size: 18px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.ep.active {
+  border-color: var(--gold); background: var(--gold-dim);
+  transform: scale(1.12);
+  box-shadow: 0 0 12px rgba(212,148,42,0.22);
+}
+
+.fg { margin-bottom: 10px; }
+.fg label {
+  font-size: 9px; letter-spacing: 2.5px; text-transform: uppercase;
+  color: var(--text3); display: block; margin-bottom: 6px;
+}
+.fg input {
+  width: 100%; padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 14px; color: var(--text);
+  background: var(--bg2); outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.fg input::placeholder { color: var(--text3); }
+.fg input:focus { border-color: rgba(212,148,42,0.5); box-shadow: 0 0 0 3px rgba(212,148,42,0.07); }
+
+.add-btn {
+  width: 100%; margin-top: 14px; padding: 14px;
+  background: linear-gradient(135deg, #C8303A 0%, #8A1018 100%);
+  color: var(--text);
+  border: 1px solid rgba(212,148,42,0.3);
+  border-radius: 12px;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  transition: all 0.2s; letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(200,48,58,0.25);
+}
+.add-btn:active { transform: scale(0.98); opacity: 0.9; }
+
+/* ── HISTORY ── */
+.history-section { padding: 0 20px 28px; position: relative; z-index: 1; }
+.hchips { display: flex; gap: 8px; flex-wrap: wrap; }
+.hchip {
+  padding: 5px 13px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 11px; color: var(--text3);
+  display: flex; align-items: center; gap: 5px; letter-spacing: 0.5px;
+}
+.hchip strong { color: var(--text2); font-weight: 400; }
+
+/* ── TOAST ── */
+.toast {
+  position: fixed; bottom: 28px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 12px 22px;
+  border-radius: 100px;
+  font-size: 13px; z-index: 999;
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  white-space: nowrap; max-width: 90vw;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.6); letter-spacing: 0.5px;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ── FOOTER ── */
+footer {
+  padding: 20px 20px 36px; text-align: center;
+  border-top: 1px solid var(--border);
+  position: relative; z-index: 1;
+}
+.f-cn {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px; color: var(--gold); opacity: 0.5;
+  letter-spacing: 5px; display: block; margin-bottom: 5px;
+}
+.f-en { font-size: 10px; color: var(--text3); letter-spacing: 1.5px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="hdr-cn">郭家晚餐</div>
+    <h1>Kok Family <span class="red">Dinner</span></h1>
+    <div class="hdr-rule">
+      <hr>
+      <span>Tonight's Table</span>
+      <hr>
+    </div>
+  </div>
+</header>
+
+<!-- LANTERNS -->
+<div class="lanterns">
+  <div class="lantern">
+    <div class="ln-string"></div>
+    <div class="ln-body">福</div>
+    <div class="ln-tassel"><span></span><span></span><span></span></div>
+  </div>
+  <div class="lantern">
+    <div class="ln-string"></div>
+    <div class="ln-body">食</div>
+    <div class="ln-tassel"><span></span><span></span><span></span></div>
+  </div>
+</div>
+
+<!-- SPIN -->
+<div class="spin-section">
+  <div class="spin-label">今晚吃什么 · What shall we eat tonight</div>
+
+  <div class="wheel-wrapper">
+    <div class="wheel-ring">
+      <div class="wheel-outer" id="wheel" onclick="spinWheel()">
+        <canvas id="wc" width="222" height="222"></canvas>
+        <div class="wheel-center"><span class="cn">食</span></div>
+      </div>
+    </div>
+    <div class="wheel-pointer">
+      <svg width="26" height="22" viewBox="0 0 26 22">
+        <polygon points="13,20 1,2 25,2" fill="#C8303A" stroke="rgba(212,148,42,0.45)" stroke-width="1.2"/>
+        <polygon points="13,14 6,4 20,4" fill="#E53545" opacity="0.4"/>
+      </svg>
+    </div>
+  </div>
+
+  <button class="spin-btn" id="spinBtn" onclick="spinWheel()">
+    <span class="si">✦</span>
+    Spin the Wheel
+    <span class="si">✦</span>
+  </button>
+</div>
+
+<!-- RESULT -->
+<div class="result-card" id="resultCard">
+  <div class="res-top">
+    <div class="res-tag">Tonight We Eat</div>
+    <div class="res-cn">今晚的晚餐</div>
+    <span class="res-emoji" id="resEmoji">🍜</span>
+  </div>
+  <div class="res-body">
+    <div class="res-name" id="resName">Bak Kut Teh</div>
+    <div class="res-cuisine" id="resCuisine">Chinese Malaysian · Herbal</div>
+    <div class="res-actions">
+      <button class="btn-keep" onclick="keepResult()">好！We'll have this</button>
+      <button class="btn-respin" onclick="spinWheel()">↺ Re-spin</button>
+    </div>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div class="history-section" id="histSec" style="display:none">
+  <div class="section-divider">
+    <hr>
+    <div class="div-inner"><span class="diam">◆</span><span>Recent Picks</span><span class="diam">◆</span></div>
+    <hr>
+  </div>
+  <div class="hchips" id="hchips"></div>
+</div>
+
+<!-- LIST -->
+<div class="section-divider" style="margin-top:8px">
+  <hr>
+  <div class="div-inner"><span class="diam">◆</span><span>Dinner Options</span><span class="diam">◆</span></div>
+  <hr>
+</div>
+<div class="dinner-list" id="dinnerList"></div>
+
+<!-- ADD -->
+<div class="section-divider">
+  <hr>
+  <div class="div-inner"><span class="diam">◆</span><span>Add a Dinner</span><span class="diam">◆</span></div>
+  <hr>
+</div>
+
+<div class="add-section">
+  <div class="add-card">
+    <div class="add-label">新增菜单 · New Option</div>
+    <div class="emoji-row" id="emojiRow"></div>
+    <div class="fg">
+      <label>Dinner Name</label>
+      <input type="text" id="newName" placeholder="E.g. Bak Kut Teh…" maxlength="40">
+    </div>
+    <div class="fg">
+      <label>Cuisine / Style</label>
+      <input type="text" id="newCuisine" placeholder="E.g. Chinese · Homemade…" maxlength="40">
+    </div>
+    <button class="add-btn" onclick="addDinner()">加入 · Add to List</button>
+  </div>
+</div>
+
+<footer>
+  <span class="f-cn">郭家共食 · 食为天</span>
+  <span class="f-en">Made with ❤️ for the Kok Family</span>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const EMOJIS = ['🍜','🍛','🍲','🥘','🫕','🍱','🥟','🍝','🦞','🐟','🍖','🥩','🍣','🌮','🥗','🍕'];
+
+const SEG_COLORS = [
+  ['#7A1018','#C8303A'],['#8A5000','#CC8A20'],['#1A3A18','#366030'],
+  ['#18285A','#2A489A'],['#4A1A5A','#8A2AB0'],['#5A2010','#A84018'],
+  ['#185040','#268A72'],['#3A3018','#7A6020']
+];
+
+const DEFAULTS = [
+  { name:'Bak Kut Teh', cuisine:'Chinese Malaysian · Herbal', emoji:'🍲' },
+  { name:'Char Siu Rice', cuisine:'Cantonese · BBQ', emoji:'🍱' },
+  { name:'Dim Sum Feast', cuisine:'Chinese · Weekend Treat', emoji:'🥟' },
+  { name:'Nasi Lemak', cuisine:'Malaysian · Traditional', emoji:'🍛' },
+  { name:'Steamboat', cuisine:'Chinese · Family Style', emoji:'🫕' },
+  { name:'Char Kway Teow', cuisine:'Hokkien · Hawker', emoji:'🍜' },
+  { name:'Yong Tau Foo', cuisine:'Hakka Chinese · Light', emoji:'🍲' },
+  { name:'Salted Fish Fried Rice', cuisine:'Chinese · Homemade', emoji:'🍱' },
+  { name:'Steamed Fish', cuisine:'Cantonese · Healthy', emoji:'🐟' },
+  { name:'Braised Pork Belly', cuisine:'Hokkien · Dong Po', emoji:'🥩' },
+];
+
+let dinners = JSON.parse(localStorage.getItem('kok_d3') || 'null') || DEFAULTS;
+let hist = JSON.parse(localStorage.getItem('kok_h3') || '[]');
+let selEmoji = '🍜';
+let spinning = false;
+let curResult = null;
+let curRot = 0;
+
+function save() {
+  localStorage.setItem('kok_d3', JSON.stringify(dinners));
+  localStorage.setItem('kok_h3', JSON.stringify(hist));
+}
+
+function drawWheel() {
+  const canvas = document.getElementById('wc');
+  const ctx = canvas.getContext('2d');
+  const S = 222, cx = S/2, cy = S/2, r = 109;
+  ctx.clearRect(0, 0, S, S);
+  const n = Math.max(dinners.length, 1);
+  const arc = (2 * Math.PI) / n;
+
+  for (let i = 0; i < n; i++) {
+    const s = i * arc - Math.PI/2;
+    const e = s + arc;
+    const ci = i % SEG_COLORS.length;
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, s, e);
+    ctx.closePath();
+    const g = ctx.createRadialGradient(cx, cy, r*0.18, cx, cy, r);
+    g.addColorStop(0, SEG_COLORS[ci][1]);
+    g.addColorStop(1, SEG_COLORS[ci][0]);
+    ctx.fillStyle = g;
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(s) * r, cy + Math.sin(s) * r);
+    ctx.strokeStyle = 'rgba(212,148,42,0.25)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    if (dinners[i]) {
+      const mid = s + arc/2;
+      const tx = cx + Math.cos(mid) * r * 0.62;
+      const ty = cy + Math.sin(mid) * r * 0.62;
+      ctx.save();
+      ctx.translate(tx, ty);
+      ctx.rotate(mid + Math.PI/2);
+      ctx.font = `${n <= 4 ? 22 : n <= 6 ? 18 : 15}px serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(dinners[i].emoji, 0, 0);
+      ctx.restore();
+    }
+  }
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, 2*Math.PI);
+  ctx.strokeStyle = 'rgba(212,148,42,0.3)';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.arc(cx, cy, r + 2, 0, 2*Math.PI);
+  ctx.strokeStyle = 'rgba(0,0,0,0.7)';
+  ctx.lineWidth = 4;
+  ctx.stroke();
+}
+
+function spinWheel() {
+  if (spinning || !dinners.length) {
+    if (!dinners.length) showToast('加菜单先！Add some dinners first!');
+    return;
+  }
+  spinning = true;
+  const btn = document.getElementById('spinBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="si">⟳</span> Spinning… <span class="si">⟳</span>';
+
+  const wheel = document.getElementById('wheel');
+  curRot += 1440 + Math.floor(Math.random() * 360);
+  wheel.style.transform = `rotate(${curRot}deg)`;
+
+  const idx = Math.floor(Math.random() * dinners.length);
+  curResult = dinners[idx];
+
+  setTimeout(() => {
+    spinning = false;
+    btn.disabled = false;
+    btn.innerHTML = '<span class="si">✦</span> Spin the Wheel <span class="si">✦</span>';
+    showResult(curResult);
+  }, 4400);
+}
+
+function showResult(d) {
+  document.getElementById('resEmoji').textContent = d.emoji;
+  document.getElementById('resName').textContent = d.name;
+  document.getElementById('resCuisine').textContent = d.cuisine;
+  const card = document.getElementById('resultCard');
+  card.classList.remove('show');
+  void card.offsetWidth;
+  card.classList.add('show');
+  setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function keepResult() {
+  if (!curResult) return;
+  hist.push(curResult);
+  if (hist.length > 20) hist.shift();
+  save(); renderHist();
+  showToast(`${curResult.emoji} ${curResult.name} — 好吃！Enjoy!`);
+  document.getElementById('resultCard').classList.remove('show');
+  curResult = null;
+}
+
+function renderList() {
+  const el = document.getElementById('dinnerList');
+  if (!dinners.length) {
+    el.innerHTML = `<div class="empty-state"><span class="ei">🥢</span>还没有菜单 · Add your first dinner below!</div>`;
+    drawWheel(); return;
+  }
+  el.innerHTML = dinners.map((d,i) => `
+    <div class="dinner-item" style="animation-delay:${i*0.04}s">
+      <span class="d-num">${i+1}</span>
+      <span class="d-emoji">${d.emoji}</span>
+      <div class="d-info">
+        <div class="d-name">${d.name}</div>
+        <div class="d-meta">${d.cuisine}</div>
+      </div>
+      <button class="del-btn" onclick="delDinner(${i})">✕</button>
+    </div>
+  `).join('');
+  drawWheel();
+}
+
+function renderEP() {
+  document.getElementById('emojiRow').innerHTML = EMOJIS.map(e =>
+    `<div class="ep${e===selEmoji?' active':''}" onclick="pickEmoji('${e}')">${e}</div>`
+  ).join('');
+}
+
+function pickEmoji(e) { selEmoji = e; renderEP(); }
+
+function addDinner() {
+  const n = document.getElementById('newName');
+  const c = document.getElementById('newCuisine');
+  const name = n.value.trim();
+  if (!name) { showToast('请输入菜名 · Enter a dinner name!'); n.focus(); return; }
+  const cuisine = c.value.trim() || 'Family Favourite';
+  dinners.push({ name, cuisine, emoji: selEmoji });
+  save(); renderList();
+  n.value = ''; c.value = '';
+  selEmoji = '🍜'; renderEP();
+  showToast(`${dinners[dinners.length-1].emoji} ${name} added!`);
+}
+
+function delDinner(i) {
+  const d = dinners[i];
+  dinners.splice(i, 1);
+  save(); renderList();
+  showToast(`${d.name} removed`);
+}
+
+function renderHist() {
+  const sec = document.getElementById('histSec');
+  const chips = document.getElementById('hchips');
+  if (!hist.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  chips.innerHTML = hist.slice(-6).reverse().map(h =>
+    `<div class="hchip">${h.emoji} <strong>${h.name}</strong></div>`
+  ).join('');
+}
+
+let tt;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(tt); tt = setTimeout(() => t.classList.remove('show'), 2900);
+}
+
+renderEP(); renderList(); renderHist();
+</script>
+</body>
+</html>
